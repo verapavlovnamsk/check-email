@@ -128,7 +128,7 @@ class verifyEmail {
                      *     does not want to accept mail from your server for
                      *     some reason (IP address, blacklisting, etc..)
                      *     Thanks Nicht Lieb.
-                    believe that e-mail exists
+                    
                      */
                     $result = true;
                 }
