@@ -1,5 +1,5 @@
-# PHP Email Validation
-Program Calculator with PHP by Filatova Vera
+# PHP Email Verifing
+Made with PHP by Filatova Vera
 This code is simple you can comment
 
 
