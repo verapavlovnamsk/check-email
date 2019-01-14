@@ -1,4 +1,8 @@
-# PHP class for Validation
+# PHP Email Validation
+Program Calculator with PHP by Filatova Vera
+This code is simple you can comment
+
+
 <ul><li>This class can be used to check if an e-mail is valid using the SMTP protocol.</li>
 
 <li>It can connect to an SMTP server defined by the MX records of the domain of the address to validate.</li>
