@@ -1,5 +1,4 @@
 <?php
-        
 class verifyEmail {
     /**
      * User name
@@ -136,9 +135,7 @@ class verifyEmail {
         }
         return $result;
     }
-
-		
-		
+	
         $email = 'filatova@gmail.com';
         $vmail = new verifyEmail();
         if ($vmail->check($email)) {
