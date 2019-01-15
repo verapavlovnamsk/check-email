@@ -1,51 +1,51 @@
 <?php
 class verifyEmail {
-    /**
-     * User name
-     * @var string
-     */
-    private $_fromName;
-    /**
-     * Domain name
-     * @var string
-     */
-    private $_fromDomain;
-    /**
-     * SMTP port number
-     * @var int
-     */
-    private $_port;
-    /**
-     * The connection timeout, in seconds.
-     * @var int
-     */
-    private $_maxConnectionTimeout;
-    /**
-     * The timeout on socket connection
-     * @var int
-     */
-    private $_maxStreamTimeout;
-    public function __construct() {
-        $this->_fromName = 'noreply';
-        $this->_fromDomain = 'localhost';
-        $this->_port = 25;
-        $this->_maxConnectionTimeout = 30;
-        $this->_maxStreamTimeout = 5;
-    }
-    /**
-     * Set email address for SMTP request
-     * @param string $email Email address
-     */
-    public function setEmailFrom($email) {
-        list($this->_fromName, $this->_fromDomain) = $this->_parseEmail($email);
-    }
-    /**
-     * Set connection timeout, in seconds.
-     * @param int $seconds
-     */
-    public function setConnectionTimeout($seconds) {
-        $this->_maxConnectionTimeout = $seconds;
-    }
+/**
+* User name
+* @var string
+*/
+private $_fromName;
+/**
+* Domain name
+* @var string
+*/
+private $_fromDomain;
+/**
+* SMTP port number
+* @var int
+*/
+private $_port;
+/**
+* The connection timeout, in seconds.
+* @var int
+*/
+private $_maxConnectionTimeout;
+/**
+* The timeout on socket connection
+* @var int
+*/
+private $_maxStreamTimeout;
+public function __construct() {
+$this->_fromName = 'noreply';
+$this->_fromDomain = 'localhost';
+$this->_port = 25;
+$this->_maxConnectionTimeout = 30;
+$this->_maxStreamTimeout = 5;
+}
+/**
+* Set email address for SMTP request
+* @param string $email Email address
+*/
+public function setEmailFrom($email) {
+list($this->_fromName, $this->_fromDomain) = $this->_parseEmail($email);
+}
+/**
+* Set connection timeout, in seconds.
+* @param int $seconds
+*/
+public function setConnectionTimeout($seconds) {
+$this->_maxConnectionTimeout = $seconds;
+}
     /**
      * Set the timeout on socket connection
      * @param int $seconds
