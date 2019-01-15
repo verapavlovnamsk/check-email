@@ -1,51 +1,51 @@
 <?php
 class verifyEmail {
-/**
-* User name
-* @var string
-*/
-private $_fromName;
-/**
-* Domain name
-* @var string
-*/
-private $_fromDomain;
-/**
-* SMTP port number
-* @var int
-*/
-private $_port;
-/**
-* The connection timeout, in seconds.
-* @var int
-*/
-private $_maxConnectionTimeout;
-/**
-* The timeout on socket connection
-* @var int
-*/
-private $_maxStreamTimeout;
-public function __construct() {
-$this->_fromName = 'noreply';
-$this->_fromDomain = 'localhost';
-$this->_port = 25;
-$this->_maxConnectionTimeout = 30;
-$this->_maxStreamTimeout = 5;
-}
-/**
-* Set email address for SMTP request
-* @param string $email Email address
-*/
-public function setEmailFrom($email) {
-list($this->_fromName, $this->_fromDomain) = $this->_parseEmail($email);
-}
-/**
-* Set connection timeout, in seconds.
-* @param int $seconds
-*/
-public function setConnectionTimeout($seconds) {
-$this->_maxConnectionTimeout = $seconds;
-}
+    /**
+     * User name
+     * @var string
+     */
+    private $_fromName;
+    /**
+     * Domain name
+     * @var string
+     */
+    private $_fromDomain;
+    /**
+     * SMTP port number
+     * @var int
+     */
+    private $_port;
+    /**
+     * The connection timeout, in seconds.
+     * @var int
+     */
+    private $_maxConnectionTimeout;
+    /**
+     * The timeout on socket connection
+     * @var int
+     */
+    private $_maxStreamTimeout;
+    public function __construct() {
+        $this->_fromName = 'noreply';
+        $this->_fromDomain = 'localhost';
+        $this->_port = 25;
+        $this->_maxConnectionTimeout = 30;
+        $this->_maxStreamTimeout = 5;
+    }
+    /**
+     * Set email address for SMTP request
+     * @param string $email Email address
+     */
+    public function setEmailFrom($email) {
+        list($this->_fromName, $this->_fromDomain) = $this->_parseEmail($email);
+    }
+    /**
+     * Set connection timeout, in seconds.
+     * @param int $seconds
+     */
+    public function setConnectionTimeout($seconds) {
+        $this->_maxConnectionTimeout = $seconds;
+    }
     /**
      * Set the timeout on socket connection
      * @param int $seconds
@@ -92,11 +92,11 @@ $this->_maxConnectionTimeout = $seconds;
             $fp = false;
             $timeout = ceil($this->_maxConnectionTimeout / count($mxs));
             foreach ($mxs as $host) {
-//                if ($fp = @fsockopen($host, $this->_port, $errno, $errstr, $timeout)) {
+            //if ($fp = @fsockopen($host, $this->_port, $errno, $errstr, $timeout)) {
                 if ($fp = @stream_socket_client("tcp://" . $host . ":" . $this->_port, $errno, $errstr, $timeout)) {
                     stream_set_timeout($fp, $this->_maxStreamTimeout);
                     stream_set_blocking($fp, 1);
-//                    stream_set_blocking($fp, 0);
+                    // stream_set_blocking($fp, 0);
                     $code = $this->_fsockGetResponseCode($fp);
                     if ($code == '220') {
                         break;
@@ -108,6 +108,7 @@ $this->_maxConnectionTimeout = $seconds;
             }
             if ($fp) {
                 $this->_fsockquery($fp, "HELO " . $this->_fromDomain);
+                //$this->_fsockquery($fp, "VRFY " . $email);
                 $this->_fsockquery($fp, "MAIL FROM: <" . $this->_fromName . '@' . $this->_fromDomain . ">");
                 $code = $this->_fsockquery($fp, "RCPT TO: <" . $user . '@' . $domain . ">");
                 $this->_fsockquery($fp, "RSET");
@@ -127,6 +128,10 @@ $this->_maxConnectionTimeout = $seconds;
                      *     does not want to accept mail from your server for
                      *     some reason (IP address, blacklisting, etc..)
                      *     Thanks Nicht Lieb.
+                     * 451 Requested action aborted: local error in processing
+                     * 452 Requested action not taken: insufficient system storage
+                     * email address was greylisted (or some temporary error occured on the MTA)
+                     * i believe that e-mail exists
                      */
                     $result = true;
                 }
@@ -134,8 +139,8 @@ $this->_maxConnectionTimeout = $seconds;
         }
         return $result;
     }
-	
-        $email = 'filatova@gmail.com';
+		
+        $email = 'vera@gmail.com';
         $vmail = new verifyEmail();
         if ($vmail->check($email)) {
             echo 'email &lt;' . $email . '&gt; exist!';
@@ -145,4 +150,3 @@ $this->_maxConnectionTimeout = $seconds;
             echo 'email &lt;' . $email . '&gt; not valid and not exist!';
         }
 ?>
-   
